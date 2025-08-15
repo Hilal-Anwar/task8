@@ -1,5 +1,9 @@
 # 🎯 Kaun Banega Lakhpati Quiz App
 
+
+https://github.com/user-attachments/assets/d22602e0-e840-4e06-ab19-33d0c06ad3c1
+
+
 A Java-based quiz application inspired by the popular game show "Kaun Banega Crorepati" (Who Wants to be a Millionaire). Test your knowledge with trivia questions fetched from the Open Trivia Database and win virtual prizes!
 
 ## 🌟 Features
