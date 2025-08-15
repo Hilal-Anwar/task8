@@ -1,11 +1,10 @@
 package org.helal_anwar;
-
 import java.util.*;
 
 public class QuizApp {
     static final String[] PRIZES = {
-            "₹1,000", "₹2,000", "₹3,000", "₹5,000", "₹10,000",
-            "₹20,000", "₹40,000", "₹80,000", "₹1,60,000", "₹3,20,000"
+        "₹1,000", "₹2,000", "₹3,000", "₹5,000", "₹10,000",
+        "₹20,000", "₹40,000", "₹80,000", "₹1,60,000", "₹3,20,000"
     };
 
     public static void main(String[] args) {
@@ -13,8 +12,6 @@ public class QuizApp {
             List<Question> questions = QuizService.fetchQuestions();
             Scanner scanner = new Scanner(System.in);
             int score = 0;
-
-            System.out.println("🎬 Welcome to...");
             System.out.println("""
                      __      __       .__                                  __                                                                                                                     \s
                     /  \\    /  \\ ____ |  |   ____  ____   _____   ____   _/  |_  ____                                                                                                             \s
@@ -42,27 +39,31 @@ public class QuizApp {
                     System.out.println((char) ('A' + j) + ". " + options.get(j));
                 }
 
-                System.out.print("\n👉 Your answer (A/B/C/D): ");
+                System.out.print("\n👉 Your answer (e.g., A or A,C): ");
                 String input = scanner.nextLine().trim().toUpperCase();
-                int index = input.charAt(0) - 'A';
+                String[] selectedLetters = input.split(",");
+                Set<String> selectedAnswers = new HashSet<>();
 
-                System.out.println("🔒 Lock kiya jaaye? (Y/N): ");
+                for (String letter : selectedLetters) {
+                    int idx = letter.trim().charAt(0) - 'A';
+                    if (idx >= 0 && idx < options.size()) {
+                        selectedAnswers.add(options.get(idx));
+                    }
+                }
+
+                System.out.print("🔒 Lock kiya jaaye? (Y/N): ");
                 String lock = scanner.nextLine().trim().toUpperCase();
                 if (!lock.equals("Y")) {
                     System.out.println("⏩ Skipping the question...");
                     continue;
                 }
 
-                if (index >= 0 && index < options.size()) {
-                    if (options.get(index).equals(q.getCorrectAnswer())) {
-                        System.out.println("✅ Sahi Jawaab! Aap jeet te hain " + PRIZES[i]);
-                        score++;
-                    } else {
-                        System.out.println("❌ Galat Jawaab! Sahi jawaab tha: " + q.getCorrectAnswer());
-                        break;
-                    }
+                Set<String> correctSet = new HashSet<>(q.getCorrectAnswers());
+                if (selectedAnswers.equals(correctSet)) {
+                    System.out.println("✅ Sahi Jawaab! Aap jeet te hain " + PRIZES[i]);
+                    score++;
                 } else {
-                    System.out.println("⚠️ Invalid option.");
+                    System.out.println("❌ Galat Jawaab! Sahi jawaab tha: " + String.join(", ", q.getCorrectAnswers()));
                     break;
                 }
 

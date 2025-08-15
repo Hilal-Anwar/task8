@@ -1,13 +1,14 @@
 package org.helal_anwar;
-import  java.util.*;
+import java.util.List;
+
 public class Question {
     private String question;
-    private String correctAnswer;
+    private List<String> correctAnswers;
     private List<String> options;
 
-    public Question(String question, String correctAnswer, List<String> options) {
+    public Question(String question, List<String> correctAnswers, List<String> options) {
         this.question = question;
-        this.correctAnswer = correctAnswer;
+        this.correctAnswers = correctAnswers;
         this.options = options;
     }
 
@@ -15,11 +16,15 @@ public class Question {
         return question;
     }
 
-    public String getCorrectAnswer() {
-        return correctAnswer;
+    public List<String> getCorrectAnswers() {
+        return correctAnswers;
     }
 
     public List<String> getOptions() {
         return options;
+    }
+
+    public boolean isMultipleAnswer() {
+        return correctAnswers.size() > 1;
     }
 }
